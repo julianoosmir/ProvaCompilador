@@ -1,0 +1,11 @@
+^begin
+^var
+^output
+^input
+^for
+^to
+^endfor
+^end
+^\"[A-z0-9:\s=]{1,50}\"$
+^\$[A-z0-9]{1,10}
+$^[0-9]{1,10}$
