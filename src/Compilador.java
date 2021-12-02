@@ -36,14 +36,21 @@ public class Compilador {
         return !erro;
     }
 
+    public Boolean gravarByteCode(){
+
+        Arquivo byteCode = new Arquivo(this.nomeArquivo) ;
+        byteCode.gravarArquivo( this.byteCode );
+
+        return true;
+    }
     private Boolean compilarLinha(String linha) {
         Boolean erro = false;
 
         if (linha.startsWith("begin")) {
             erro = processarBegin(linha);
         }
-        if (linha.equals("fim")) {
-            erro = processarFim(linha);
+        if (linha.equals("end")) {
+            erro = processarEnd(linha);
         }
 
         if (linha.startsWith("var")) {
@@ -55,15 +62,15 @@ public class Compilador {
         if (linha.startsWith("input")) {
             erro = processarInput(linha);
         }
-        if (linha.equals("novalinha")) {
-            this.byteCode.add("cout<< \"\\n\"");
+        if (linha.equals("line")) {
+            this.byteCode.add("cout<< \"\\n\"" + ";");
         }
 
         if (linha.startsWith("for")) {
             erro = processarFor(linha);
         }
 
-        if (linha.equals("fimconte")) {
+        if (linha.equals("endfor")) {
             this.byteCode.add("}");
 
         }
@@ -73,14 +80,21 @@ public class Compilador {
         return erro;
     }
 
+    private Boolean processarEnd(String linha) {
+        Boolean erro = false;
+        this.byteCode.add("return 0;");
+        this.byteCode.add("}");
+        return erro;
+    }
+
     private Boolean processarFor(String linha) {
         Boolean erro = false;
         String tokens[] = linha.split(" ");
 
-        String inicio = tokens[4];
-        String fim = tokens[6];
-        String variavel = tokens[2];
-        String resultado = "for( " + variavel +"="+inicio+";" + variavel +" < "+fim+";"+variavel +"++){";
+        String inicio = tokens[3];
+        String fim = tokens[5];
+        String variavel = tokens[1];
+        String resultado = "for( int " + variavel +"= " + inicio + ";" + variavel +" <= "+fim+";"+variavel +"++){";
         this.byteCode.add(resultado);
         return erro;
     }
@@ -114,6 +128,7 @@ public class Compilador {
     private Boolean processarBegin(String linha) {
         Boolean erro = false;
         this.byteCode.add("#include  <iostream>");
+        this.byteCode.add("using namespace std;");
         this.byteCode.add("int main() {");
 
         String tokens[] = linha.split(" ");

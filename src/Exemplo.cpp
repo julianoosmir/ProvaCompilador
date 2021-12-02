@@ -6,7 +6,7 @@ int main() {
   int r;
   cout << "Digite um numero:";
   cin >> n;
-  for (int i=0; i <= 10; i++) {
+  for (int i=1; i <= 10; i++) {
     r = n * i;
     cout << i;
     cout << " x ";

@@ -6,3 +6,4 @@
 ^for \$[A-z]{1,10} de [0-9]{1,10} ate [0-9]{1,10}$
 ^endfor
 ^end
+^line
