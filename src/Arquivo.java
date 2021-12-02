@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Arquivo {
 
     public String base = "./src/";
-    //public String base = "C:\\Users\\sidne\\projeto\\newlang\\";
     public String nomeArquivo;
 
     public Arquivo(String nome){

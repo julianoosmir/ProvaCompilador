@@ -2,11 +2,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
-        // https://github.com/SidneyMaldonado/Cport.git (fetch)
         Scanner teclado = new Scanner(System.in);
         String codigofonte;
         System.out.print("Digite o nome do programa:");
@@ -14,19 +12,11 @@ public class App {
         Arquivo arquivo = new Arquivo(codigofonte);
         List<String> fonte = arquivo.lerArquivo();
 
-//        String linha = "for i = 1 to 10";
-//        String tokens[] = linha.split(" ");
-//        System.out.println(tokens.length);
-//        for (String cha : tokens) {
-//            System.out.println(cha + " = " + Arrays.asList(tokens).indexOf(cha));
-//        }
         Boolean compiladoOK = executaCompilacao(fonte);
 
         if (compiladoOK) {
-            linkar("/", fonte);
-
+            linkar("src/", fonte);
         }
-
 
     }
 
@@ -49,18 +39,14 @@ public class App {
         String palavras[] = linha.split(" ");
         nomeArquivo += palavras[1].replaceAll("\"", "");
         nomeArquivo += ".cpp";
-        nomeArquivo = nomeArquivo.replaceAll("/","");
-
+        String app = nomeArquivo.replace(".cpp", "App");
+        String linhaDeComando = "g++ " + nomeArquivo + " -o " + app;
+        Runtime comando = Runtime.getRuntime();
         try {
-            String app = nomeArquivo.replace(".cpp", "App");
-            String linhaDeComando = "g++ " + nomeArquivo + " -o " + app;
 
-            Runtime comando = Runtime.getRuntime();
-            comando.exec(linhaDeComando);
-
-            // falta arrumar o delete
-
-
+            Process p = comando.exec(linhaDeComando);
+            p.waitFor();
+            System.out.println(linhaDeComando);
             return true;
 
         } catch (Exception e) {
