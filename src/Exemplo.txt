@@ -12,5 +12,6 @@ begin "Tabuada"
         output n
         output " = "
         output r
+        line
     endfor
 end
