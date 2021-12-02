@@ -1,0 +1,16 @@
+begin "Tabuada"
+    
+    var n
+    var r
+    output "Digite um numero:"
+    input n
+    
+    for i = 1 to 10
+        r = n * i
+        output i
+        output " x "
+        output n
+        output " = "
+        output r
+    endfor
+end
