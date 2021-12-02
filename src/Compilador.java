@@ -9,6 +9,7 @@ public class Compilador {
     public int numerolinha = 0;
     public List<String> byteCode; // codigo que sera gerado pelo compilador
 
+
     public Compilador(List<String> fonte) {
         this.codigoFonte = fonte;
         this.byteCode = new ArrayList<>();
@@ -36,13 +37,14 @@ public class Compilador {
         return !erro;
     }
 
-    public Boolean gravarByteCode(){
+    public Boolean gravarByteCode() {
 
-        Arquivo byteCode = new Arquivo(this.nomeArquivo) ;
-        byteCode.gravarArquivo( this.byteCode );
+        Arquivo byteCode = new Arquivo(this.nomeArquivo);
+        byteCode.gravarArquivo(this.byteCode);
 
         return true;
     }
+
     private Boolean compilarLinha(String linha) {
         Boolean erro = false;
 
@@ -65,7 +67,9 @@ public class Compilador {
         if (linha.equals("line")) {
             this.byteCode.add("cout<< \"\\n\"" + ";");
         }
-
+        if (linha.contains("*") || linha.contains("+") || linha.contains("-") || linha.contains("/") ) {
+            this.byteCode.add(linha + ";");
+        }
         if (linha.startsWith("for")) {
             erro = processarFor(linha);
         }
@@ -74,7 +78,6 @@ public class Compilador {
             this.byteCode.add("}");
 
         }
-
 
 
         return erro;
@@ -94,15 +97,15 @@ public class Compilador {
         String inicio = tokens[3];
         String fim = tokens[5];
         String variavel = tokens[1];
-        String resultado = "for( int " + variavel +"= " + inicio + ";" + variavel +" <= "+fim+";"+variavel +"++){";
+        String resultado = "for( int " + variavel + "= " + inicio + ";" + variavel + " <= " + fim + ";" + variavel + "++){";
         this.byteCode.add(resultado);
         return erro;
     }
 
     private Boolean processarInput(String linha) {
         Boolean erro = false;
-        String variavel = linha.replace("input ","");
-        String resultado = "cin >> "+variavel+";";
+        String variavel = linha.replace("input ", "");
+        String resultado = "cin >> " + variavel + ";";
         this.byteCode.add(resultado);
         return erro;
     }
